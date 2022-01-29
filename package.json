@@ -7,13 +7,17 @@
     "start": "node api/server.js",
     "server": "nodemon api/server.js",
     "client": "npm start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "data:import": "node api/seeder.js --import",
+    "data:destroy": "node api/seeder.js --destroy"
   },
   "author": "Shahbaazkyz",
   "license": "MIT",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "chalk": "^2.4.1",
     "express": "^4.17.2",
+    "express-async-handler": "^1.2.0",
     "mongoose": "^6.2.0"
   },
   "devDependencies": {
