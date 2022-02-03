@@ -1,3 +1,4 @@
+const bcryptjs = require("bcryptjs");
 const mongoose = require("mongoose");
 
 //* Create user model
@@ -23,6 +24,11 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+userSchema.methods.checkPassword = async function (pass) {
+  return await bcryptjs.compare(pass, this.password);
+};
+
 
 const User = mongoose.model("User", userSchema);
 

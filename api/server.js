@@ -10,7 +10,10 @@ connectDB();
 
 const port = process.env.PORT;
 
+app.use(express.json());
+
 app.use("/api/products", require("./routes/productRoutes"));
+app.use("/api/users", require("./routes/userRoutes"));
 
 app.use(notFound);
 app.use(errorHandler);
