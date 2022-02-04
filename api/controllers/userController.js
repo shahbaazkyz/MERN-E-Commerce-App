@@ -24,27 +24,33 @@ const authUser = asyncHandler(async (req, res) => {
   }
 });
 
-
 //* @desc    Register a new User
 //* @route   POST /api/users
 //* @access  Public
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { name , email, password } = req.body;
+  const { name, email, password } = req.body;
 
   const user = await User.findOne({ email });
-  if (user && (await user.checkPassword(password))) {
-    return res.status(200).send({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      token: generateToken(user._id),
-    });
-  } else {
-    res.status(401);
-    throw new Error("Invalid credentials");
+
+  if (user) {
+    res.status(400);
+    throw new Error("User already exists!");
   }
+
+  const newUser = await User.create({ name, email, password });
+  if (!newUser) {
+    res.status(401);
+    throw new Error("User not created");
+  }
+
+  res.status(201).send({
+    _id: newUser._id,
+    name: newUser.name,
+    email: newUser.email,
+    isAdmin: newUser.isAdmin,
+    token: generateToken(newUser._id),
+  });
 });
 
 //* @desc Get User Profile

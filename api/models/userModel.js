@@ -29,6 +29,12 @@ userSchema.methods.checkPassword = async function (pass) {
   return await bcryptjs.compare(pass, this.password);
 };
 
+userSchema.pre("save", async function (next) {
+  if (this.isModified("password")) {
+    this.password = await bcryptjs.hash(this.password, 8);
+  }
+  next();
+});
 
 const User = mongoose.model("User", userSchema);
 
