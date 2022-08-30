@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { Button, Col, Form } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
@@ -22,7 +22,6 @@ const PaymentScreen = () => {
     dispatch(savePaymentMethod(paymentMethod))
     navigate("/placeorder")
   }
-
 
   return (
     <FormContainer>
